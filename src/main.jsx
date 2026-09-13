@@ -71,6 +71,11 @@ function App() {
           {tarefas.filter(item => item.concluida).length}
         </p>
 
+        {tarefas.length > 0 &&
+          tarefas.every(item => item.concluida) && (
+            <p>Todas as tarefas foram concluídas!</p>
+          )}
+
         <ul className="lista">
           {tarefas.length === 0 && (
             <li className="vazio">
