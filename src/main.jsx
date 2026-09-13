@@ -4,24 +4,43 @@ import './style.css'
 
 function App() {
   const [tarefa, setTarefa] = useState('')
- const [tarefas, setTarefas] = useState([
-  { id: 1, texto: 'Estudar DevOps', concluida: false },
-  { id: 2, texto: 'Aprender Git', concluida: false },
-  { id: 3, texto: 'Criar projeto no GitHub', concluida: false }
-])
-  
+  const [tarefas, setTarefas] = useState([
+    { id: 1, texto: 'Estudar DevOps', concluida: false },
+    { id: 2, texto: 'Aprender Git', concluida: false },
+    { id: 3, texto: 'Criar projeto no GitHub', concluida: false }
+  ])
 
   function adicionarTarefa(event) {
     event.preventDefault()
+
     if (!tarefa.trim()) return
 
-    setTarefas([...tarefas, { id: Date.now(), texto: tarefa, concluida: false }])
+    const tarefaExistente = tarefas.some(
+      item => item.texto.toLowerCase() === tarefa.trim().toLowerCase()
+    )
+
+    if (tarefaExistente) {
+      alert('Essa tarefa já existe!')
+      return
+    }
+
+    setTarefas([
+      ...tarefas,
+      {
+        id: Date.now(),
+        texto: tarefa.trim(),
+        concluida: false
+      }
+    ])
+
     setTarefa('')
   }
 
   function alternarTarefa(id) {
     setTarefas(tarefas.map(item =>
-      item.id === id ? { ...item, concluida: !item.concluida } : item
+      item.id === id
+        ? { ...item, concluida: !item.concluida }
+        : item
     ))
   }
 
@@ -41,21 +60,39 @@ function App() {
             onChange={event => setTarefa(event.target.value)}
             placeholder="Digite uma tarefa..."
           />
-          <button type="submit">Adicionar</button>
+
+          <button type="submit">
+            Adicionar
+          </button>
         </form>
+
         <p>
-          Tarefas: {tarefas.length} | Concluídas: {tarefas.filter(item => item.concluida).length}
+          Tarefas: {tarefas.length} | Concluídas:{' '}
+          {tarefas.filter(item => item.concluida).length}
         </p>
 
         <ul className="lista">
           {tarefas.length === 0 && (
-            <li className="vazio">Nenhuma tarefa cadastrada.</li>
+            <li className="vazio">
+              Nenhuma tarefa cadastrada.
+            </li>
           )}
 
           {tarefas.map(item => (
-            <li key={item.id} className={item.concluida ? 'concluida' : ''}>
-              <span onClick={() => alternarTarefa(item.id)}>{item.texto}</span>
-              <button onClick={() => removerTarefa(item.id)}>Excluir</button>
+            <li
+              key={item.id}
+              className={item.concluida ? 'concluida' : ''}
+            >
+              <span onClick={() => alternarTarefa(item.id)}>
+                {item.texto}
+              </span>
+
+              <button
+                type="button"
+                onClick={() => removerTarefa(item.id)}
+              >
+                Excluir
+              </button>
             </li>
           ))}
         </ul>
