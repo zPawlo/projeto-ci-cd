@@ -43,6 +43,9 @@ function App() {
           />
           <button type="submit">Adicionar</button>
         </form>
+        <p>
+          Tarefas: {tarefas.length} | Concluídas: {tarefas.filter(item => item.concluida).length}
+        </p>
 
         <ul className="lista">
           {tarefas.length === 0 && (
