@@ -4,7 +4,12 @@ import './style.css'
 
 function App() {
   const [tarefa, setTarefa] = useState('')
-  const [tarefas, setTarefas] = useState([])
+ const [tarefas, setTarefas] = useState([
+  { id: 1, texto: 'Estudar DevOps', concluida: false },
+  { id: 2, texto: 'Aprender Git', concluida: false },
+  { id: 3, texto: 'Criar projeto no GitHub', concluida: false }
+])
+  
 
   function adicionarTarefa(event) {
     event.preventDefault()
